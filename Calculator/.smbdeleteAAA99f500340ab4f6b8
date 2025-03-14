@@ -58,7 +58,7 @@ class ViewController: UIViewController {
                         )
                     }
                     
-                    let isInt floor(Double(displayLabel.text!)) == Double(displayLabel.text!)
+                    let isInt = floor(Double(displayLabel.text!)) == Double(displayLabel.text!)
                     
                 }
                 displayLabel.text! += numValue

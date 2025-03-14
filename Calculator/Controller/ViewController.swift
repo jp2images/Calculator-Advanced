@@ -1,0 +1,73 @@
+//
+//  ViewController.swift
+//  Calculator
+//
+//  Created by Angela Yu on 10/09/2019.
+//  Copyright © 2019 London App Brewery. All rights reserved.
+//
+
+import UIKit
+
+class ViewController: UIViewController {
+    
+    @IBOutlet weak var displayLabel: UILabel!
+    
+    /// This variable is used to check if the user has finished typing the number
+    private var isFinsihedTypingNumber: Bool = true
+    
+    private var displayValue: Double {
+        get {
+            /// This will crash with a usable error message if the text cannot be converted to a Double
+            guard let number = Double(displayLabel.text!) else {
+                fatalError("Cannot convert display label text to a Double")
+            }
+            return number
+        }
+        set {
+            /// When the displayValue is updated, lets update the displayLabel.text on the UI
+            displayLabel.text = String(newValue)
+        }
+    }
+    
+    /// What should happen when a non-number button is pressed
+    @IBAction func calcButtonPressed(_ sender: UIButton) {
+        isFinsihedTypingNumber = true
+        
+        if let calcMethod = sender.currentTitle{
+            switch calcMethod {
+                case "AC":
+                    displayLabel.text = "0"
+                case "+/-":
+                    displayValue *= -1
+                case "%":
+                    displayValue *= 0.01
+                default:
+                    break
+            }
+        }
+    }
+    
+    /// What should happen when a number is entered into the keypad
+    @IBAction func numButtonPressed(_ sender: UIButton) {
+        if let numValue = sender.currentTitle {
+            if isFinsihedTypingNumber {
+                displayLabel.text = numValue
+                isFinsihedTypingNumber = false
+            } else {
+                
+                if numValue == "." {
+                    let isInt = displayValue == floor(displayValue)
+                    if !isInt {
+                        return
+                    }
+                }
+            
+                displayLabel.text! += numValue
+            }
+        }
+    }
+    
+    
+    
+}
+
